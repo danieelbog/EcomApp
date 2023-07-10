@@ -9,12 +9,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.19" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Vite.AspNetCore" Version="1.8.0" />
     <PackageReference Include="VueCliMiddleware" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ClientApp\src\components\" />
-    <Folder Include="ClientApp\src\router\" />
     <Folder Include="ClientApp\src\stores\" />
   </ItemGroup>
 
