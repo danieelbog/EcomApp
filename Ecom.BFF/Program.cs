@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApp.BFF.Core.Models;
+using WebApp.BFF.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,23 +11,23 @@ var builder = WebApplication.CreateBuilder(args);
 #endregion
 
 #region Database - Identity Configurations
-//builder.Services.AddDbContext<EcomContext>(options =>
-//  options.UseSqlServer(builder.Configuration.GetConnectionString("EcomContext")));
+builder.Services.AddDbContext<EcomContext>(options =>
+  options.UseSqlServer(builder.Configuration.GetConnectionString("EcomContext")));
 
-//builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-//{
-//    options.Password.RequiredLength = 4;
-//    options.Password.RequireNonAlphanumeric = false;
-//    options.Password.RequireDigit = false;
-//    options.Password.RequireUppercase = false;
-//})
-//    .AddEntityFrameworkStores<EcomContext>()
-//    .AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 4;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireUppercase = false;
+})
+    .AddEntityFrameworkStores<EcomContext>()
+    .AddDefaultTokenProviders();
 
-//builder.Services.ConfigureApplicationCookie(options =>
-//{
-//    options.Cookie.Name = "ChatiusCokie";
-//});
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = "ChatiusCokie";
+});
 
 #endregion
 
