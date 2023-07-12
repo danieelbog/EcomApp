@@ -16,6 +16,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\components\" />
     <Folder Include="ClientApp\src\stores\" />
+    <Folder Include="ClientApp\src\views\Authentication\" />
   </ItemGroup>
 
 </Project>
