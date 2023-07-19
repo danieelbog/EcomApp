@@ -30,3 +30,25 @@
         </div>
     </div>
 </template>
+
+<script lang="ts">
+    import { defineComponent, getCurrentInstance } from "vue";
+    import { EventBus } from "../../stores/event-bus";
+
+    export default defineComponent({
+        setup() {
+            const app = getCurrentInstance();
+            var eventBus = app?.appContext.config.globalProperties.$eventBus as EventBus;
+
+            eventBus.on("hello-world", function () {
+                console.log("hello-world-event")
+            })
+
+            setTimeout(() => {
+                eventBus.emit("hello-world");
+            }, 5000)
+
+            console.log(eventBus)
+        }
+    })
+</script>
