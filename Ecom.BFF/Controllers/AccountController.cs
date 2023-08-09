@@ -1,4 +1,5 @@
 ﻿using Ecom.BFF.DTOs.Account;
+using Ecom.Services.Account.Exception;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,9 @@ namespace Ecom.BFF.Controllers
         public async Task<IActionResult> GetAuthUser()
         {
             var applicationUser = await _userManager.GetUserAsync(User);
+            if(applicationUser == null)
+                throw new UserNotFoundServiceException();
+
             return Ok(applicationUser);
         }
 
@@ -39,7 +43,7 @@ namespace Ecom.BFF.Controllers
 
             var result = await _userManager.CreateAsync(applicationUser, registerDto.Password);
             if (!result.Succeeded)
-                return BadRequest();
+                throw new UserInvalidCredentialsServiceException();
 
             await _signInManager.SignInAsync(applicationUser, false);
             var userDto = new UserDto(applicationUser.UserName, applicationUser.Email);
@@ -52,11 +56,11 @@ namespace Ecom.BFF.Controllers
         {
             var applicationUser = await _userManager.FindByNameAsync(loginDto.Username);
             if (applicationUser == null)
-                return BadRequest();
+                throw new UserNotFoundServiceException();
 
             var result = await _signInManager.PasswordSignInAsync(applicationUser, loginDto.Password, false, false);
             if (!result.Succeeded)
-                return BadRequest();
+                throw new UserInvalidCredentialsServiceException();
 
             var userDto = new UserDto(applicationUser.UserName, applicationUser.Email);
             return Ok(userDto);

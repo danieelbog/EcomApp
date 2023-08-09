@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Ecom.Core\Ecom.Core.csproj" />
     <ProjectReference Include="..\Ecom.EntityFramework\Ecom.EntityFramework.csproj" />
+    <ProjectReference Include="..\Ecom.Services\Ecom.Services.csproj" />
   </ItemGroup>
 
 </Project>
