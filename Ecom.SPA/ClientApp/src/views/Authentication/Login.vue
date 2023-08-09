@@ -61,7 +61,7 @@
             }
 
             function loginRedirect() {
-                router.push((router.currentRoute.value.query) || ("/"));
+                router.push({ path: router.currentRoute.value.query.redirect as string ?? "/" });
             }
 
             return {

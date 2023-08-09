@@ -58,7 +58,7 @@
             }
 
             function registerRedirect() {
-                router.push((router.currentRoute.value.query) || ("/"));
+                router.push({ path: "/"});
             }
 
             return {
