@@ -4,27 +4,27 @@
         <div class="row">
             <div class="col-12 col-lg-4"></div>
             <div class="col-12 col-lg-4">
-                <div class="alert alert-danger d-flex flex-row align-items-center error-messages">
-                    <i class="material-icons material-icon-24">report_problem</i>
-                    <span>Error</span>
+                <div v-if="showError" class="alert alert-danger d-flex flex-row align-items-center error-messages">
+                    <span>Error:</span>
+                    <i class="material-icons material-icon-24">{{errorMessage}}</i>
                 </div>
                 <div class="mb-3">
-                    <label for="inputEmail" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+                    <label for="inputUsername" class="form-label">Username</label>
+                    <input id="inputUsername" v-model="username" type="email" class="form-control" aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="inputPassword">
+                    <input id="inputPassword" v-model="password" type="password" class="form-control">
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Remeber me</label>
                 </div>
                 <div class="mt-3">
-                    <button class="btn btn-primary w-100">Login</button>
-                    <a href="#" class="text-center">
-                        <p class="p-2">Or Register</p>
-                    </a>
+                    <button @click="login" class="btn btn-primary w-100">Login</button>
+                    <router-link to="/register">
+                        <p class="mt-2 mb-2">Or Register</p>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -32,23 +32,45 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, getCurrentInstance } from "vue";
-    import { EventBus } from "../../stores/event-bus";
+    import { defineComponent, ref } from "vue";
+    import { useAuthStore } from "@/stores/auth.store";
+    import { LoginDto } from "@/types/auth.dto"
+    import router from "@/router/index";
 
     export default defineComponent({
         setup() {
-            const app = getCurrentInstance();
-            var eventBus = app?.appContext.config.globalProperties.$eventBus as EventBus;
+            var errorMessage = ref("da");
+            var showError = ref(false);
 
-            eventBus.on("hello-world", function () {
-                console.log("hello-world-event")
-            })
+            var authStore = useAuthStore();
+            var password = ref("");
+            var username = ref("");
 
-            setTimeout(() => {
-                eventBus.emit("hello-world");
-            }, 5000)
+            async function login() {
+                try {
+                    var loginDto = {
+                        username: username.value,
+                        password: password.value,
+                    } as LoginDto;
+                    await authStore.login(loginDto);
+                    if (authStore.isAuthenticated()) loginRedirect();
+                } catch (error: any) {
+                    showError.value = true;
+                    errorMessage.value = error;
+                }
+            }
 
-            console.log(eventBus)
+            function loginRedirect() {
+                router.push((router.currentRoute.value.query) || ("/"));
+            }
+
+            return {
+                errorMessage,
+                showError,
+                password,
+                username,
+                login
+            }
         }
     })
 </script>

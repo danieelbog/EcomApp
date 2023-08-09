@@ -11,7 +11,8 @@
       "@/components/*":["./src/components/*"],
       "@/types/*":["./src/types/*"],
       "@/stores/*":["./src/stores/*"],
-      "@/api/*":["./src/api/*"]
+      "@/api/*": [ "./src/api/*" ],
+      "@/router/*": ["./src/router/*"]
     },
     /* Bundler mode */
     "moduleResolution": "node",

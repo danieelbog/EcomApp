@@ -5,7 +5,7 @@ import { initMockApis } from "@/src/mocks";
 import { useAuthStore } from "@/stores/auth.store";
 
 //global axios api
-const api = createInstance("https://localhost:7102/");
+const api = createInstance("https://localhost:7277/");
 export { api };
 
 //global mock api
@@ -38,7 +38,7 @@ function createInstance(baseURL: string) {
 
 if (enviromentIsDev()) initMockApis();
 
-function createMockAdapter(): MockAdapter {
+function createMockAdapter() {
 	var adapter = new MockAdapter(api, {
 		onNoMatch: "throwException",
 		delayResponse: 1500,

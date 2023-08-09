@@ -38,5 +38,9 @@ function getAliases(): AliasOptions {
 			find: "@/api",
 			replacement: fileURLToPath(new URL("./src/api", import.meta.url)),
 		},
+		{
+			find: "@/router",
+			replacement: fileURLToPath(new URL("./src/router", import.meta.url)),
+		},
 	];
 }
