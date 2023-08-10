@@ -26,6 +26,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Ecom.Core\Ecom.Core.csproj" />
     <ProjectReference Include="..\Ecom.EntityFramework\Ecom.EntityFramework.csproj" />
+    <ProjectReference Include="..\Ecom.Repository.Impl\Ecom.Repository.Impl.csproj" />
+    <ProjectReference Include="..\Ecom.Services.Impl\Ecom.Services.Impl.csproj" />
     <ProjectReference Include="..\Ecom.Services\Ecom.Services.csproj" />
   </ItemGroup>
 

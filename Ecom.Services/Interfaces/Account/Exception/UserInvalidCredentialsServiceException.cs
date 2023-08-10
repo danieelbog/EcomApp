@@ -1,7 +1,7 @@
-﻿using Ecom.Services.Account.Error;
-using Ecom.Services.Exceptions.Exception;
+﻿using Ecom.Services.Exceptions.Exception;
+using Ecom.Services.Interfaces.Account.Error;
 
-namespace Ecom.Services.Account.Exception
+namespace Ecom.Services.Interfaces.Account.Exception
 {
     public class UserInvalidCredentialsServiceException : ServiceException
     {

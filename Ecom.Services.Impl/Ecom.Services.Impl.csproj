@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ecom.Core\Ecom.Core.csproj" />
+    <ProjectReference Include="..\Ecom.Repository\Ecom.Repository.csproj" />
+    <ProjectReference Include="..\Ecom.Services\Ecom.Services.csproj" />
+  </ItemGroup>
+
 </Project>

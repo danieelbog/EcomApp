@@ -1,4 +1,4 @@
-﻿namespace Ecom.BFF.DTOs.Account
+﻿namespace Ecom.Core.DTOs.Account
 {
     public class UserDto
     {

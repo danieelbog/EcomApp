@@ -1,3 +1,8 @@
+using Ecom.BFF.Attributes;
+using Ecom.Repository.Impl.Repositories;
+using Ecom.Repository.Interfaces;
+using Ecom.Services.Impl.Services.Logging;
+using Ecom.Services.Interfaces.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApp.BFF.Core.Models;
@@ -5,9 +10,20 @@ using WebApp.BFF.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Logging Injection
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Logging.AddEventSourceLogger();
+#endregion
+
 #region Dependency Injections
+builder.Services.AddScoped<ILoggingService, LoggingService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+#endregion
 
-
+#region Mapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 #endregion
 
 #region Database - Identity Configurations
@@ -26,14 +42,17 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.Cookie.Name = "ChatiusCokie";
+    options.Cookie.Name = "EcomAppCookie";
 });
 
 #endregion
 
 #region Services
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<LogAttribute>();
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
@@ -65,18 +84,6 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapDefaultControllerRoute();
-//    endpoints.MapHub<ChatHub>("/hub", options =>
-//    {
-//        options.Transports =
-//               HttpTransportType.WebSockets |
-//               HttpTransportType.LongPolling;
-//    });
-
-//});
 
 app.MapDefaultControllerRoute();
 

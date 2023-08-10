@@ -1,6 +1,6 @@
 ﻿using Ecom.Services.Exceptions.Error;
 
-namespace Ecom.Services.Account.Error
+namespace Ecom.Services.Interfaces.Account.Error
 {
     public class UserInvalidCredentialsError : ServiceError
     {

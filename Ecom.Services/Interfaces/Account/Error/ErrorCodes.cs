@@ -1,4 +1,4 @@
-﻿namespace Ecom.Services.Account.Error
+﻿namespace Ecom.Services.Interfaces.Account.Error
 {
     public static class ErrorCodes
     {

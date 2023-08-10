@@ -1,13 +1,13 @@
-﻿using Ecom.BFF.DTOs.Account;
-using Ecom.Services.Account.Exception;
+﻿using Ecom.Core.DTOs.Account;
+using Ecom.Services.Interfaces.Account.Exception;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.BFF.Core.Models;
 
-namespace Ecom.BFF.Controllers
+namespace Ecom.BFF.Controllers.Account
 {
-    public class AccountController: Controller
+    public class AccountController : Controller
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
@@ -25,7 +25,7 @@ namespace Ecom.BFF.Controllers
         public async Task<IActionResult> GetAuthUser()
         {
             var applicationUser = await _userManager.GetUserAsync(User);
-            if(applicationUser == null)
+            if (applicationUser == null)
                 throw new UserNotFoundServiceException();
 
             return Ok(applicationUser);
