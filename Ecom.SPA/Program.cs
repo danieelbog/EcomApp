@@ -1,17 +1,18 @@
-﻿namespace Iwcp.Web.SPA.Application
+﻿var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSpaStaticFiles(config =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    config.RootPath = "ClientApp/dist";
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+var app = builder.Build();
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseSpa(client =>
+{
+    client.UseProxyToSpaDevelopmentServer("https://localhost:5000");
+});
+
+app.Run();

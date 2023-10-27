@@ -1,6 +1,5 @@
 using Ecom.BFF.Attributes;
 using Ecom.Repository.Impl.Repositories;
-using Ecom.Repository.Interfaces;
 using Ecom.Services.Impl.Services.Logging;
 using Ecom.Services.Interfaces.Logging;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +27,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 #region Database - Identity Configurations
 builder.Services.AddDbContext<EcomContext>(options =>
-  options.UseSqlServer(builder.Configuration.GetConnectionString("EcomContext")));
+  options.UseSqlServer(builder.Configuration.GetConnectionString("EcomContext")), ServiceLifetime.Transient);
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {

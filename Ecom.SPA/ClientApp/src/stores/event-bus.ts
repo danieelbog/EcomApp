@@ -8,32 +8,28 @@ export class EventBus {
     }
 
     on(event: string, listener: ListenerFunction): void {
-        this.listeneres[event] = this.listeneres[event] || [];   
+        this.listeneres[event] = this.listeneres[event] || [];
 
-        if (this.listeneres[event].indexOf(listener) !== -1)
-            return;
+        if (this.listeneres[event].indexOf(listener) !== -1) return;
 
         this.listeneres[event].push(listener);
     }
 
     off(event: string, listener: ListenerFunction): void {
-        if (!this.listeneres[event])
-            return;
+        if (!this.listeneres[event]) return;
 
-        var index = this.listeneres[event].indexOf(listener)
-        if (index == -1)
-            return;
+        const index = this.listeneres[event].indexOf(listener);
+        if (index == -1) return;
 
         this.listeneres[event].splice(index, 1);
     }
 
     emit(event: string, ...eventData: any): void {
-        if (!this.listeneres[event] || this.listeneres[event].length == 0)
-            return;
+        if (!this.listeneres[event] || this.listeneres[event].length == 0) return;
 
-        var copy = this.listeneres[event].slice();
+        const copy = this.listeneres[event].slice();
         copy.forEach((listener) => {
-            listener.apply(null, eventData);
-        })
+            listener(...eventData);
+        });
     }
 }

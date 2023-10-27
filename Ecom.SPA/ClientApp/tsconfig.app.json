@@ -1,33 +1,33 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": [ "ES2020", "DOM", "DOM.Iterable" ],
-    "skipLibCheck": true,
-    "paths": {
-      "@/src/*":["./src/*"],
-      "@/views/*":["./src/views/*"],
-      "@/components/*":["./src/components/*"],
-      "@/types/*":["./src/types/*"],
-      "@/stores/*":["./src/stores/*"],
-      "@/api/*": [ "./src/api/*" ],
-      "@/router/*": ["./src/router/*"]
+    "compilerOptions": {
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "allowJs": false,
+        "esModuleInterop": false,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "ESNext",
+        "paths": {
+            "@/src/*": ["./src/*"],
+            "@/views/*": ["./src/views/*"],
+            "@/components/*": ["./src/components/*"],
+            "@/types/*": ["./src/types/*"],
+            "@/stores/*": ["./src/stores/*"],
+            "@/api/*": ["./src/api/*"],
+            "@/router/*": ["./src/router/*"],
+            "@/assets/*": ["./src/assets/*"],
+            "bootstrap/dist/js/bootstrap": ["./node_modules/types/bootstrap"]
+        },
+        /* Bundler mode */
+        "moduleResolution": "node",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "preserve"
     },
-    /* Bundler mode */
-    "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": [ "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue" ],
-  "references": [ { "path": "./tsconfig.node.json" } ]
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+    "references": [{ "path": "./tsconfig.node.json" }]
 }

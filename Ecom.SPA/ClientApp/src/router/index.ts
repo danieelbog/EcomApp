@@ -1,26 +1,35 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/auth.store";
-import routes from "../views";
+import { useLayoutStore } from "@/src/stores/layout.store";
 
-var router = createRouter({
-	history: createWebHistory(),
-	routes,
+import routes from "../views";
+import { IRouteMeta } from "./types";
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes
 });
 
 router.beforeEach(async (to, from, next) => {
-	const authStore = useAuthStore();
-	const allowAnonymous = to.matched.some((record) => record.meta.allowAnonymous);
-	const loginQuery = { path: "/login", query: { redirect: to.fullPath } };
+    document.title = (to.meta as IRouteMeta).pageTitle;
+    const authStore = useAuthStore();
+    const isRouteAnonymous = to.matched.some((record) => record.meta.allowAnonymous);
 
-	if (!allowAnonymous && !authStore.isAuthenticated()) {
-		try {
-			await authStore.getAuthUser();
-			if (!authStore.isAuthenticated()) next(loginQuery);
-			else next();
-		} catch (error) {
-			next(loginQuery);
-		}
-	} else next();
+    if (!isRouteAnonymous && !authStore.isAuthenticated()) {
+        try {
+            await authStore.getApplicationUser();
+            if (authStore.isAuthenticated()) next();
+            else next({ path: "/login", query: { redirect: to.fullPath } });
+        } catch (error) {
+            console.error("Navigation error:", error);
+            next({ path: "/login", query: { redirect: to.fullPath } });
+        }
+    } else next();
+});
+
+router.afterEach(async (to) => {
+    const layoutStore = useLayoutStore();
+    layoutStore.setLayout((to.meta as IRouteMeta).layoutType);
 });
 
 export default router;

@@ -7,10 +7,11 @@ using WebApp.BFF.Core.Models;
 
 namespace Ecom.BFF.Controllers.Account
 {
+    [Route("api/account")]
     public class AccountController : Controller
     {
-        private UserManager<ApplicationUser> _userManager;
-        private SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -20,8 +21,7 @@ namespace Ecom.BFF.Controllers.Account
             _signInManager = signInManager;
         }
 
-        [HttpGet]
-        [Route("/getAuthUser")]
+        [HttpGet("auth")]
         public async Task<IActionResult> GetAuthUser()
         {
             var applicationUser = await _userManager.GetUserAsync(User);
@@ -31,11 +31,10 @@ namespace Ecom.BFF.Controllers.Account
             return Ok(applicationUser);
         }
 
-        [HttpPost]
-        [Route("/register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-            var applicationUser = new ApplicationUser()
+            var applicationUser = new ApplicationUser
             {
                 UserName = registerDto.Username,
                 Email = registerDto.Email,
@@ -50,15 +49,14 @@ namespace Ecom.BFF.Controllers.Account
             return Ok(userDto);
         }
 
-        [HttpPost]
-        [Route("/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var applicationUser = await _userManager.FindByNameAsync(loginDto.Username);
             if (applicationUser == null)
                 throw new UserNotFoundServiceException();
 
-            var result = await _signInManager.PasswordSignInAsync(applicationUser, loginDto.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(applicationUser, loginDto.Password, true, false);
             if (!result.Succeeded)
                 throw new UserInvalidCredentialsServiceException();
 
@@ -66,8 +64,7 @@ namespace Ecom.BFF.Controllers.Account
             return Ok(userDto);
         }
 
-        [HttpPost]
-        [Route("/logout")]
+        [HttpPost("logout")]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
